@@ -159,4 +159,4 @@ function loop() {
 
 };
 
-var loopHandle = setInterval(loop, 10);
+//var loopHandle = setInterval(loop, 10);
