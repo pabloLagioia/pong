@@ -101,9 +101,9 @@ wsServer.on('request', function(request) {
 
         console.log("Looking for a replacement in the espectators");
 
-        if ( clients. ) {
+        // if ( clients. ) {
 
-        }
+        // }
 
     });
 
