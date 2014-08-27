@@ -62,7 +62,7 @@ wsServer.on('request', function(request) {
     var connection = request.accept(null, request.origin),
         client;
 
-    if ( players.length < 2 ) {
+    if ( clients.players.length < 2 ) {
 
         client = new Player(connection);
         client.index = players.length - 1;
@@ -96,10 +96,13 @@ wsServer.on('request', function(request) {
         clients[client.type].splice(client.index, 1);
 
         console.log(client.type, "disconnected!");
+
+        if ( client.type == "" )
+
         console.log("Looking for a replacement in the espectators");
 
-        if ( client ) {
-            
+        if ( clients. ) {
+
         }
 
     });
