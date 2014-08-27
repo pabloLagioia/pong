@@ -6,6 +6,10 @@ function Ball(x, y) {
     this.width = config.ball.width;
     this.height = config.ball.height;
     this.speed = config.ball.speed;
+    this.direction = {
+    	x: 1,
+    	y: 0
+    }
 }
 
 module.exports = Ball;

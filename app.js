@@ -97,11 +97,15 @@ wsServer.on('request', function(request) {
 
         console.log(client.type, "disconnected!");
 
-        if ( client.type == "" )
+        // if ( client.type == "" ) {
 
-        console.log("Looking for a replacement in the espectators");
+            // console.log("Looking for a replacement in the espectators");
 
-        // if ( clients. ) {
+            // if ( clients.players.length < 2 && clients.spectators.length > 0 ) {
+
+            //     clients.players.push(clients.spectators.pop());
+
+            // }
 
         // }
 
@@ -118,8 +122,27 @@ function loop() {
     if ( clients.players.length > 2 ) {
 
         state.type = "playing";
+
+        ball.x += ball.direction.x * ball.speed;
+        ball.y += ball.direction.y * ball.speed;
+
+        if ( ball.y < 0 || ball.y + ball.height > config.gameArea.height ) {
+            ball.direction.y *= -1;
+        }
+
+        if ( ball.x < 0 ) {
+            state.type = "end";
+            state.winner = "pad2";
+        }
+
+        if ( ball.x + ball.width > config.gameArea.width ) {
+            state.type = "end";
+            state.winner = "pad1";
+        }
+
         state.pad1 = clients.players[0].pad;
         state.pad2 = clients.players[1].pad;
+        
         state.ball = ball;
 
     }

@@ -9,5 +9,9 @@
 		"speed": 5,
 		"width": 20,
 		"height": 20
+	},
+	"gameArea": {
+		"width": 640,
+		"height": 480
 	}
 }
