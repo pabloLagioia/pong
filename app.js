@@ -111,27 +111,27 @@ wsServer.on('request', function(request) {
 
 function loop() {
 
-    var gameState = "waiting";
+    var state = {
+        gameState = "waiting"
+    };
 
     if ( clients.players.length > 2 ) {
 
-
+        state.type = "playing";
+        state.pad1 = clients.players[0].pad;
+        state.pad2 = clients.players[1].pad;
+        state.ball = ball;
 
     }
 
-    var state = JSON.stringify({
-        type: gameState,
-        pad1: clients.players[0],
-        pad2: clients.players[1],
-        ball: ball
-    });
+    var stringifiedState = JSON.stringify(state);
 
     clients.players.forEach(function(player) {
-        player.connection.sendUTF(state);
+        player.connection.sendUTF(stringifiedState);
     });
 
     clients.espectators.forEach(function(spectator) {
-        spectator.connection.sendUTF(state);
+        spectator.connection.sendUTF(stringifiedState);
     });
 
 };
