@@ -1,0 +1,10 @@
+{
+  "name": "pong",
+  "description": "Canvas + Nodejs Muliplayer Pong",
+  "version": "0.0.1",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "websocket": "^1.0.8"
+  }
+}
