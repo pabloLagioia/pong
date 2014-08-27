@@ -78,6 +78,8 @@ wsServer.on('request', function(request) {
 
         });
 
+        console.log("New player!");
+
     } else {
         
         client = new Espectator(connection);
@@ -85,10 +87,21 @@ wsServer.on('request', function(request) {
 
         clients.espectators.push(client);
 
+        console.log("Espectator joined!");
+
     }
 
     connection.on('close', function(connection) {
+
         clients[client.type].splice(client.index, 1);
+
+        console.log(client.type, "disconnected!");
+        console.log("Looking for a replacement in the espectators");
+
+        if ( client ) {
+            
+        }
+
     });
 
 });
