@@ -65,7 +65,7 @@ wsServer.on('request', function(request) {
     if ( clients.players.length < 2 ) {
 
         client = new Player(connection);
-        client.index = players.length - 1;
+        client.index = clients.players.length - 1;
 
         clients.players.push(client);
 
