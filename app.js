@@ -12,6 +12,7 @@ var WebSocketServer = require("websocket").server,
         players: [],
         espectators: [],
     },
+    ball = new Ball(),
     server,
     wsServer;
 
@@ -96,7 +97,7 @@ function loop() {
 
     var gameState = "waiting";
 
-    if ( players.length > 2 ) {
+    if ( clients.players.length > 2 ) {
 
 
 
