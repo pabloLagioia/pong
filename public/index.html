@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
-
-	<head>
-		<title>Online Pong</title>
-		<script src="jquery-2.1.1.min.js"></script>
-	</head>
-
-	<body>
-		<canvas width="640" height="480"></canvas>
-		<script src="main.js"></script>
-	</body>
-
+    <head>
+        <title>Online Pong</title>
+        <style>
+            canvas {
+                border-top: 3px solid black;
+                border-bottom: 3px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <!--h1>WebSocket + Canvas powered two player PONG clone</h1-->
+        <div id="contents">
+            <div>Score: <span class="score">0/0</span></div>
+            <canvas width="640" height="480"></canvas>
+        </div>
+        <script src="jquery-2.1.1.min.js"></script>
+        <script src="main.js"></script>
+    </body>
 </html>
