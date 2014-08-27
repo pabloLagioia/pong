@@ -4,7 +4,14 @@ var WebSocketServer = require("websocket").server,
     config = require("./config.json"),
     path = require("path"),
     fs = require("fs"),
-    clients = [],
+    Ball = require("./Ball"),
+    Espectator = require("./Espectator"),
+    Player = require("./Player"),
+    Client = require("./Client"),
+    clients = {
+        players: [],
+        espectators: [],
+    },
     server,
     wsServer;
 
@@ -52,24 +59,64 @@ wsServer = new WebSocketServer({
 wsServer.on('request', function(request) {
 
     var connection = request.accept(null, request.origin),
-        index = clients.length - 1;
+        client;
 
-    clients.push(connection);
+    if ( players.length < 2 ) {
 
-    // This is the most important callback for us, we'll handle
-    // all messages from users here.
-    connection.on('message', function(message) {
+        client = new Player(connection);
+        client.index = players.length - 1;
 
-        //we should check the location is ok
+        clients.players.push(client);
 
-        var data = message.utf8Data;
+        //We only listen to players
+        connection.on('message', function(message) {
 
+            var data = JSON.parse(message.utf8Data);
 
-    });
+            client[data.move]();
+
+        });
+
+    } else {
+        
+        client = new Espectator(connection);
+        client.index = espectators.length - 1;
+
+        clients.espectators.push(client);
+
+    }
 
     connection.on('close', function(connection) {
-        //Remove client from list
-        clients.splice(index, 1);
+        clients[client.type].splice(client.index, 1);
     });
 
 });
+
+function loop() {
+
+    var gameState = "waiting";
+
+    if ( players.length > 2 ) {
+
+
+
+    }
+
+    var state = JSON.stringify({
+        type: gameState,
+        pad1: clients.players[0],
+        pad2: clients.players[1],
+        ball: ball
+    });
+
+    clients.players.forEach(function(player) {
+        player.connection.sendUTF(state);
+    });
+
+    clients.espectators.forEach(function(spectator) {
+        spectator.connection.sendUTF(state);
+    });
+
+};
+
+var loopHandle = setInterval(loop, 10);

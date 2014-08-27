@@ -1,3 +1,13 @@
 {
-	"port": 8080
+	"port": 8080,
+	"pad": {
+		"speed": 3,
+		"width": 20,
+		"height": 40
+	},
+	"ball": {
+		"speed": 5,
+		"width": 20,
+		"height": 20
+	}
 }
