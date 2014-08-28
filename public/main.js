@@ -18,7 +18,6 @@ $(document).ready(function() {
 		connection = new WebSocket("ws://127.0.0.1:8080"),
 		connectionStatus = "noConnection",
 		moving = false,
-		locations = [],
 		isMouseDown = false;
 
     var pad1 = new GameObject({color: "red", y: 180, type: "pad", name: "pad1"});
