@@ -81,8 +81,6 @@ wsServer.on('request', function(request) {
         //We only listen to players
         connection.on('message', function(message) {
 
-            console.log(message);
-
             var data = JSON.parse(message.utf8Data);
 
             client[data.move]();
