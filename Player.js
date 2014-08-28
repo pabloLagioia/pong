@@ -6,18 +6,16 @@ function Player(connection) {
     this.connection = connection;
     this.pad = new Pad();
     this.type = "players";
-    this.y=0;
-    this.x=0;
 };
 
 Player.prototype = new Client;
 
 Player.prototype.up = function() {
-    this.y -= config.pad.speed;
+    this.pad.y -= config.pad.speed;
 };
 
 Player.prototype.down = function() {
-    this.y += config.pad.speed;
+    this.pad.y += config.pad.speed;
 };
 
 module.exports = Player;

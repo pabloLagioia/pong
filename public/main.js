@@ -16,17 +16,16 @@ $(document).ready(function() {
 	var cnv = document.getElementsByTagName("canvas")[0],
 		ctx = cnv.getContext("2d"),
 		connection = new WebSocket("ws://127.0.0.1:8080"),
-		connectionStatus = "noConnection",
-		moving = false,
-		isMouseDown = false;
+		moving = false;
 
+    //instantiate (drawable) game objects
     var pad1 = new GameObject({color: "red", y: 180, type: "pad", name: "pad1"});
     var pad2 = new GameObject({color: "black", x: 620, y: 180, type: "pad", name: "pad2"});
     var ball = new GameObject({color: "black", x: cnv.width / 2, y: cnv.height / 2, type: "ball", width: 30});
 
     var waiting = true;
 
-//instantiate (drawable) game objects
+    //add objects to rendering queue
     objects.push(pad1);
     objects.push(pad2);
     objects.push(ball);

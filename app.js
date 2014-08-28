@@ -61,9 +61,12 @@ function reset() {
         player2 = clients.players[1];
 
     player1.pad.x = config.player1.x;
+    player1.pad.y = config.player1.y;
     player2.pad.x = config.player2.x;
+    player2.pad.y = config.player2.y;
 
     ball.x = config.ball.x;
+    ball.y = config.ball.y;
 
 }
 
