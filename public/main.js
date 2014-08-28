@@ -69,7 +69,7 @@ $(document).ready(function() {
 
 	function input() {
         if (moving) {
-            connection.send(JSON.stringify({moving: moving}));
+            connection.send(JSON.stringify({move: moving}));
         }
 	}
 
@@ -93,12 +93,10 @@ $(document).ready(function() {
 		if (e.keyCode == 38) {
             e.preventDefault();
 			moving = "up";
-            sendMessages(moving);
 		}
 		if (e.keyCode == 40) {
             e.preventDefault();
 			moving = "down";
-            sendMessages(moving);
 		}
 	});
 
