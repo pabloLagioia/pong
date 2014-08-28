@@ -78,10 +78,6 @@ wsServer.on('request', function(request) {
         client = new Player(connection);
         client.index = clients.players.length - 1;
 
-        if ( clients.players.length == 1 ) {
-            reset();
-        }
-
         //We only listen to players
         connection.on('message', function(message) {
 
@@ -90,6 +86,12 @@ wsServer.on('request', function(request) {
             client[data.move]();
 
         });
+
+        clients.players.push(client);
+
+        if ( clients.players.length == 2 ) {
+            reset();
+        }
 
         console.log("New player!");
 
@@ -131,7 +133,7 @@ wsServer.on('request', function(request) {
 function loop() {
 
     var state = {
-        gameState: "waiting"
+        type: "waiting"
     };
 
     if ( clients.players.length == 2 ) {
