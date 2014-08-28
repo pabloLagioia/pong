@@ -9,14 +9,6 @@
 
 })();
 
-var connectionMessages = function(msg) {
-    console.debug(msg.type);
-};
-
-var sendMessages = function(movement) {
-    connection.send( JSON.stringify({"move": movement}) );
-};
-
 var objects = [];
 $(document).ready(function() {
 	
@@ -42,6 +34,15 @@ $(document).ready(function() {
     connection.onmessage = function (event) {
         console.debug(event.data)
     };
+
+    var connectionMessages = function(msg) {
+        console.debug(msg.type);
+    };
+
+    var sendMessages = function(movement) {
+        connection.send( JSON.stringify({"move": movement}) );
+    };
+
 	//instantiate (drawable) game objects
 	objects.push(new GameObject({color: "red", y: 180, type: "pad", name: "pad1"}));
 	objects.push(new GameObject({color: "black", x: 620, y: 180, type: "pad", name: "pad2"}));
@@ -76,12 +77,12 @@ $(document).ready(function() {
 
 		if (e.keyCode == 38) {
             e.preventDefault();
-			moving = "moveUp";
+			moving = "up";
             sendMessages(moving);
 		}
 		if (e.keyCode == 40) {
             e.preventDefault();
-			moving = "moveDown";
+			moving = "down";
             sendMessages(moving);
 		}
 	});

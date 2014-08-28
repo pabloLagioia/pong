@@ -1,5 +1,6 @@
 var Client = require("./Client"),
-	Pad = require("./Pad");
+	Pad = require("./Pad"),
+	config = require("./config");
 
 function Player(connection) {
     this.connection = connection;
