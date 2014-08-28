@@ -10,6 +10,7 @@
 })();
 
 var objects = [];
+
 $(document).ready(function() {
 	
 	var cnv = document.getElementsByTagName("canvas")[0],
@@ -19,6 +20,15 @@ $(document).ready(function() {
 		moving = false,
 		locations = [],
 		isMouseDown = false;
+
+    var pad1 = new GameObject({color: "red", y: 180, type: "pad", name: "pad1"});
+    var pad2 = new GameObject({color: "black", x: 620, y: 180, type: "pad", name: "pad2"});
+    var ball = new GameObject({color: "black", x: cnv.width / 2, y: cnv.height / 2, type: "ball", width: 30});
+
+//instantiate (drawable) game objects
+    objects.push(pad1);
+    objects.push(pad2);
+    objects.push(ball);
 
 	//Handle connection open
     connection.onopen = function (msg) {
@@ -32,7 +42,15 @@ $(document).ready(function() {
  
  	//Handle incomming messages
     connection.onmessage = function (event) {
-        console.debug(event.data)
+        var data = JSON.parse(event.data);
+        if (data) {
+            pad1.position.x = data.pad1.x;
+            pad1.position.y = data.pad1.y;
+            pad2.position.x = data.pad2.x;
+            pad2.position.y = data.pad2.y;
+            ball.position.x = data.ball.x;
+            ball.position.y = data.ball.y;
+        }
     };
 
     var connectionMessages = function(msg) {
@@ -43,26 +61,6 @@ $(document).ready(function() {
         connection.send( JSON.stringify({"move": movement}) );
     };
 
-	//instantiate (drawable) game objects
-	objects.push(new GameObject({color: "red", y: 180, type: "pad", name: "pad1"}));
-	objects.push(new GameObject({color: "black", x: 620, y: 180, type: "pad", name: "pad2"}));
-	objects.push(new GameObject({color: "black", x: cnv.width / 2, y: cnv.height / 2, type: "ball", width: 30}));
-
-	var renderers = {
-		ctx: ctx,
-		pad: function (obj) {
-			this.ctx.fillStyle = obj.color;
-			this.ctx.fillRect(obj.position.x, obj.position.y, obj.size.width, obj.size.height);
-		},
-		ball: function (obj) {
-			this.ctx.beginPath();
-			this.ctx.fillStyle = obj.color;
-			this.ctx.arc(obj.position.x, obj.position.y, obj.size.width / 2, 0, Math.PI * 2, false);
-			this.ctx.fill();
-			this.ctx.stroke();
-		}
-	};
-
 	function gameLoop() {
 		input();
 		render();
@@ -70,8 +68,25 @@ $(document).ready(function() {
 	}
 
 	function input() {
-
+        if (moving) {
+            connection.send(JSON.stringify({moving: moving}));
+        }
 	}
+
+    var renderers = {
+        ctx: ctx,
+        pad: function (obj) {
+            this.ctx.fillStyle = obj.color;
+            this.ctx.fillRect(obj.position.x, obj.position.y, obj.size.width, obj.size.height);
+        },
+        ball: function (obj) {
+            this.ctx.beginPath();
+            this.ctx.fillStyle = obj.color;
+            this.ctx.arc(obj.position.x, obj.position.y, obj.size.width / 2, 0, Math.PI * 2, false);
+            this.ctx.fill();
+            this.ctx.stroke();
+        }
+    };
 
 	jQuery("body").on("keydown", function (e) {
 
