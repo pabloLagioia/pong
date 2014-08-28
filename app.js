@@ -116,7 +116,7 @@ wsServer.on('request', function(request) {
 function loop() {
 
     var state = {
-        gameState = "waiting"
+        gameState: "waiting"
     };
 
     // if ( clients.players.length > 2 ) {
@@ -182,4 +182,4 @@ function checkCollision(ball, pad) {
 
 }
 
-var loopHandle = setInterval(loop, 10);
+//var loopHandle = setInterval(loop, 10);

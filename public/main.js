@@ -21,6 +21,7 @@ $(document).ready(function() {
 			"ok": "Connected",
 			"error": "Connection error"
 		},
+		moving = false,
 		locations = [],
 		isMouseDown = false;
 
@@ -68,6 +69,23 @@ $(document).ready(function() {
 	function input() {
 
 	}
+
+	jQuery("body").on("keydown", function (e) {
+		e.preventDefault();
+		if (e.keyCode == 38) {
+			moving = "up";
+		}
+		if (e.keyCode == 40) {
+			moving = "down";
+		}
+	});
+
+	jQuery("body").on("keyup", function (e) {
+		e.preventDefault();
+		if (e.keyCode == 38 || e.keyCode == 40) {
+			moving = false;
+		}
+	});
 
     //Render scene
 	function render() {
