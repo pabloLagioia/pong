@@ -116,7 +116,7 @@ wsServer.on('request', function(request) {
 function loop() {
 
     var state = {
-        gameState = "waiting"
+        gameState: "waiting"
     };
 
     if ( clients.players.length > 2 ) {
