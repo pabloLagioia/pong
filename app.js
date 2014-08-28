@@ -119,7 +119,7 @@ function loop() {
         gameState = "waiting"
     };
 
-    if ( clients.players.length > 2 ) {
+    // if ( clients.players.length > 2 ) {
 
         state.type = "playing";
 
@@ -140,12 +140,24 @@ function loop() {
             state.winner = "pad1";
         }
 
-        state.pad1 = clients.players[0].pad;
-        state.pad2 = clients.players[1].pad;
-        
+        var pad1 = clients.players[0].pad,
+            pad2 = clients.players[1].pad;
+
+        if ( checkCollision(ball, pad1) || checkCollision(ball, pad2) ) {
+
+            ball.direction.x *= -1;
+
+            while (checkCollision(ball, pad1) || checkCollision(ball, pad2)) {
+                ball.x += ball.direction.x * ball.speed;
+            }
+
+        }
+
+        state.pad1 = pad1;
+        state.pad2 = pad2;
         state.ball = ball;
 
-    }
+    // }
 
     var stringifiedState = JSON.stringify(state);
 
@@ -158,5 +170,16 @@ function loop() {
     });
 
 };
+
+function checkCollision(ball, pad) {
+
+    if ( ball.y + ball.height < pad.y ) return false;
+    if ( ball.y > pad.y + pad.height ) return false;
+    if ( ball.x + ball.width < pad.x ) return false;
+    if ( ball.x > pad.x + pad.width ) return false;
+
+    return true;
+
+}
 
 var loopHandle = setInterval(loop, 10);
