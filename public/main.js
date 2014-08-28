@@ -9,6 +9,14 @@
 
 })();
 
+var connectionMessages = function(msg) {
+    console.debug(msg.type);
+};
+
+var sendMessages = function(movement) {
+    connection.send( JSON.stringify({"move": movement}) );
+};
+
 var objects = [];
 $(document).ready(function() {
 	
@@ -16,29 +24,23 @@ $(document).ready(function() {
 		ctx = cnv.getContext("2d"),
 		connection = new WebSocket("ws://127.0.0.1:8080"),
 		connectionStatus = "noConnection",
-		connectionStatusMessages = {
-			"noConnection": "Not Connected",
-			"ok": "Connected",
-			"error": "Connection error"
-		},
 		moving = false,
 		locations = [],
 		isMouseDown = false;
 
 	//Handle connection open
-    connection.onopen = function () {
-    	connectionStatus = "ok";
+    connection.onopen = function (msg) {
+        connectionMessages( msg );
     };
  
  	//Handle error
-    connection.onerror = function (error) {
-        connectionStatus = "error";
+    connection.onerror = function (msg) {
+        connectionMessages( msg );
     };
  
  	//Handle incomming messages
-    connection.onmessage = function (message) {
-
-
+    connection.onmessage = function (event) {
+        console.debug(event.data)
     };
 	//instantiate (drawable) game objects
 	objects.push(new GameObject({color: "red", y: 180, type: "pad", name: "pad1"}));
@@ -71,18 +73,22 @@ $(document).ready(function() {
 	}
 
 	jQuery("body").on("keydown", function (e) {
-		e.preventDefault();
+
 		if (e.keyCode == 38) {
-			moving = "up";
+            e.preventDefault();
+			moving = "moveUp";
+            sendMessages(moving);
 		}
 		if (e.keyCode == 40) {
-			moving = "down";
+            e.preventDefault();
+			moving = "moveDown";
+            sendMessages(moving);
 		}
 	});
 
 	jQuery("body").on("keyup", function (e) {
-		e.preventDefault();
 		if (e.keyCode == 38 || e.keyCode == 40) {
+            e.preventDefault();
 			moving = false;
 		}
 	});
