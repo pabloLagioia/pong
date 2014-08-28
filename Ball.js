@@ -8,7 +8,7 @@ function Ball(x, y) {
     this.speed = config.ball.speed;
     this.direction = {
     	x: 1,
-    	y: 0
+    	y: 1
     }
 }
 
