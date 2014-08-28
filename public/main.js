@@ -25,6 +25,8 @@ $(document).ready(function() {
     var pad2 = new GameObject({color: "black", x: 620, y: 180, type: "pad", name: "pad2"});
     var ball = new GameObject({color: "black", x: cnv.width / 2, y: cnv.height / 2, type: "ball", width: 30});
 
+    var waiting = true;
+
 //instantiate (drawable) game objects
     objects.push(pad1);
     objects.push(pad2);
@@ -39,18 +41,31 @@ $(document).ready(function() {
     connection.onerror = function (msg) {
         connectionMessages( msg );
     };
- 
- 	//Handle incomming messages
+
     connection.onmessage = function (event) {
+        //Handle incomming messages
+
         var data = JSON.parse(event.data);
-        if (data) {
-            pad1.position.x = data.pad1.x;
-            pad1.position.y = data.pad1.y;
-            pad2.position.x = data.pad2.x;
-            pad2.position.y = data.pad2.y;
-            ball.position.x = data.ball.x;
-            ball.position.y = data.ball.y;
+
+        var messageHandler = {
+            waiting: function() {
+                $("title").html("waiting player");
+            },
+            playing: function() {
+                pad1.position.x = data.pad1.x;
+                pad1.position.y = data.pad1.y;
+                pad2.position.x = data.pad2.x;
+                pad2.position.y = data.pad2.y;
+                ball.position.x = data.ball.x;
+                ball.position.y = data.ball.y;
+            },
+            end: function() {
+
+            }
         }
+
+        messageHandler[data.type]();
+
     };
 
     var connectionMessages = function(msg) {
