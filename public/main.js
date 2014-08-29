@@ -95,7 +95,8 @@ $(document).ready(function() {
         ball: function (obj) {
             this.ctx.beginPath();
             this.ctx.fillStyle = obj.color;
-            this.ctx.arc(obj.position.x, obj.position.y, obj.size.width / 2, 0, Math.PI * 2, false);
+            var radius = obj.size.width / 2;
+            this.ctx.arc(obj.position.x + radius, obj.position.y + radius, radius, 0, Math.PI * 2, false);
             this.ctx.fill();
             this.ctx.stroke();
         }
